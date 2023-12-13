@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
 
-function Button({text}) {
+function Button({ text }) {
   return (
-    <div className='bg-blue-400 text-white font-medium text-xl rounded-md py-4 px-6'>
-        {text}
+    <div
+      className="bg-blue-400 text-white font-medium rounded-md py-2 px-4"
+      style={{ fontSize: "1vw" }}
+    >
+      {text}
     </div>
-  )
+  );
 }
 
-export default Button
+export default Button;
