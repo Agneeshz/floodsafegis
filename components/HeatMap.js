@@ -17,7 +17,7 @@ function HeatMap({stations, day}) {
         // console.log({inputString});
 
         if (matches) {
-          // const [value1, value2, value3] = matches.map(match => match.split(/[:;]/)[1]);
+
           const [, value1, value2, value3] = matches;
 
 
@@ -40,7 +40,7 @@ function HeatMap({stations, day}) {
 
       }
       const get_intensity = (data,forecast) =>{
-        // console.log({data});
+  
         data = {
           WL:parseFloat(data?.WL),
           DL:parseFloat(data?.DL)
