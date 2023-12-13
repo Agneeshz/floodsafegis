@@ -8,7 +8,7 @@ import { get_all_stations_wl_forecast } from '@/utils/api_call';
 import { useState } from 'react';
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({stations}) {
+export default function Map({stations}) {
   const options = [
     {name: 'Chenimari', value: 'sv'},
     {name: 'Chaparmukh', value: 'en'},
@@ -43,7 +43,7 @@ export default function Home({stations}) {
           
           <div className='w-[75%] rounded-xl mt-12'>
 
-          {/* <HeatMap stations={stations} day={day}/> */}
+          <HeatMap stations={stations} day={day}/>
           </div>
           
         </div>
@@ -55,3 +55,13 @@ export default function Home({stations}) {
 
 
 
+export async function getServerSideProps(context) {
+
+  const resp = await get_all_stations_wl_forecast();
+  const stations = resp?.stations
+
+
+  return {
+    props: {stations},
+  }
+}
