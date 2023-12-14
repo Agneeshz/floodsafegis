@@ -16,39 +16,120 @@ export default function Map({stations}) {
   ];
 
   const [day, setDay] = useState(1)
+
+
+  const defaultProps = {
+    center: {
+      lat: 10.99835602,
+      lng: 77.01502627
+    },
+    zoom: 11
+  };
+  const get_DL_WL  = (inputString) =>{
+
+
+    const regex = /(\d+\.\d+);(\d+\.\d+):(\d+\.\d+)/;
+
+    const matches = inputString.match(regex);
+    // console.log({inputString});
+
+    if (matches) {
+
+      const [, value1, value2, value3] = matches;
+
+
+
+
+
+      return {
+        WL:value1,
+        DL:value2,
+        HFL:value3
+      }
+    } else {
+      console.log("No match found.");
+      return {
+        WL:0,
+        DL:0,
+        HFL:0
+      }
+    }
+
+  }
+  const get_intensity = (data,forecast) =>{
+
+    data = {
+      WL:parseFloat(data?.WL),
+      DL:parseFloat(data?.DL)
+    }
+    forecast = parseFloat(forecast)
+    if (forecast < data?.WL){
+      return 5;
+    }else if(forecast < data?.DL && forecast >= data?.WL){
+      console.log({forecast, data});
+      return (forecast - data?.WL)%data?.DL
+    }else{
+      console.log("here" , {forecast, data});
+      return forecast - data?.DL;
+    }
+    
+  }
+
+ 
+  const stations_lat_lng = stations?.map((item)=>{
+    return {
+      lat:item?.lat,
+      lng:item?.lng,
+      weight: get_intensity(get_DL_WL(item['WL;DL;HFL']),item[`day-${day}-forecast`]['max-WL'])
+
+
+    }
+  })
+
+  
+
+
+
+
+
+  const heatMapData = {    
+  // positions: [
+  //   {
+  //     lat: 10.99835602,
+  //     lng: 77.01502627,
+  //     weight:10,
+  //   },
+  //   {
+  //     lat: 12.99835602,
+  //     lng: 79.01502627,
+  //     weight:20
+  //   },
+  //   {
+  //     lat: 14.99835602,
+  //     lng: 79.01502627,
+  //     weight:10
+  //   },
+  //   {
+  //     lat: 13.99835602,
+  //     lng: 79.01502627,
+  //     weight:20
+  //   }
+  
+  // ],
+  positions:stations_lat_lng,
+  options: {   
+    radius: 40,   
+    opacity: 0.6,
+    
+}}
+
+
   return (
    <>
-    <div>
-      <Navbar/>
+    
 
-
-        <div className='mx-40 mt-12 !text-black'>
-        <SelectSearch options={options} value="sv" name="language" placeholder="Choose your language" />
-
-        </div>
-
-        <div className='flex justify-center items-center'>
-
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(1)}>1</button>
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(2)}>2</button>
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(3)}>3</button>
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(4)}>4</button>
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(5)}>5</button>
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(6)}>6</button>
-          <button className='bg-blue-400 text-white rounded-md p-4 text-lg mx-2' onClick={()=> setDay(7)}>7</button>
-
-        </div>
-
-        <div className='flex justify-center'>
-          
-          <div className='w-[75%] rounded-xl mt-12'>
-
-          <HeatMap stations={stations} day={day}/>
-          </div>
-          
-        </div>
+          <HeatMap stations={stations} day={day} defaultProps={defaultProps} heatMapData={heatMapData}/>
       
-    </div>
    </>
   )
 }

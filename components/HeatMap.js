@@ -1,125 +1,60 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react';
-function HeatMap({stations, day}) {
-    const defaultProps = {
-        center: {
-          lat: 10.99835602,
-          lng: 77.01502627
-        },
-        zoom: 11
-      };
-      const get_DL_WL  = (inputString) =>{
+import { useState } from 'react';
+import styles from "@/styles/heatmap.module.css";
+import Button from './Button';
+function HeatMap({day, defaultProps, heatMapData}) {
+  const mapOptions = {
+    fullscreenControl: false,
+  };
 
+  const [selectedPoint, setSelectedPoint] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [population, setPopulation] = useState("94,927");
+  const [showGraph, setShowGraph] = useState(false);
 
-        const regex = /(\d+\.\d+);(\d+\.\d+):(\d+\.\d+)/;
-
-        const matches = inputString.match(regex);
-        // console.log({inputString});
-
-        if (matches) {
-
-          const [, value1, value2, value3] = matches;
-
-
-
-
-
-          return {
-            WL:value1,
-            DL:value2,
-            HFL:value3
-          }
-        } else {
-          console.log("No match found.");
-          return {
-            WL:0,
-            DL:0,
-            HFL:0
-          }
-        }
-
-      }
-      const get_intensity = (data,forecast) =>{
-  
-        data = {
-          WL:parseFloat(data?.WL),
-          DL:parseFloat(data?.DL)
-        }
-        forecast = parseFloat(forecast)
-        if (forecast < data?.WL){
-          return 5;
-        }else if(forecast < data?.DL && forecast >= data?.WL){
-          console.log({forecast, data});
-          return (forecast - data?.WL)%data?.DL
-        }else{
-          console.log("here" , {forecast, data});
-          return forecast - data?.DL;
-        }
-        
-      }
-
-     
-      const stations_lat_lng = stations?.map((item)=>{
-        return {
-          lat:item?.lat,
-          lng:item?.lng,
-          weight: get_intensity(get_DL_WL(item['WL;DL;HFL']),item[`day-${day}-forecast`]['max-WL'])
-
-
-        }
-      })
-
-      
-
-
- 
-
-
-      const heatMapData = {    
-      // positions: [
-      //   {
-      //     lat: 10.99835602,
-      //     lng: 77.01502627,
-      //     weight:10,
-      //   },
-      //   {
-      //     lat: 12.99835602,
-      //     lng: 79.01502627,
-      //     weight:20
-      //   },
-      //   {
-      //     lat: 14.99835602,
-      //     lng: 79.01502627,
-      //     weight:10
-      //   },
-      //   {
-      //     lat: 13.99835602,
-      //     lng: 79.01502627,
-      //     weight:20
-      //   }
-      
-      // ],
-      positions:stations_lat_lng,
-      options: {   
-        radius: 40,   
-        opacity: 0.6,
-        
-    }}
-    console.log({stations_lat_lng});
+  const handleMapClick = (event) => {
+    setSelectedPoint({
+      lat: event.lat,
+      lng: event.lng,
+    });
+    setIsOpen(!isOpen);
+  };
   return (
-    <div className='' style={{ height: '50vh', width: '100%'  , borderRadius:'4rem'}} id="map">
-        <GoogleMapReact
+    <div
+      className=""
+      style={{ height: "100%", width: "100%", borderRadius: "4rem" }}
+      id="map"
+    >
+      <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyBjX_00GI694FLmt2-_70v4ZHTL8DNa54E" }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
-        heatmapLibrary={true}          
-        heatmap={heatMapData}          
+        options={mapOptions}
+        heatmapLibrary={true}
+        heatmap={heatMapData}
+        onClick={handleMapClick}
+      ></GoogleMapReact>
+      {showGraph && <div className={styles.backdrop}></div>}
+      <dialog open={isOpen} className={styles.dialogBox}>
+        <p>Location: Chenimari</p>
+        <p>Area Status: Safe</p>
+        <p>Population:{population}</p>
+        <p>Initial Water Level: 827</p>
+        <p>Nearest Rescue Zone: Dibrugarh</p>
+        <div
+          onClick={() => setShowGraph(!showGraph)}
+          className={styles.generateGraphBtn}
         >
-    
-        </GoogleMapReact>
-
+          <Button text={"Generate Graph"} alignment="center" />
+        </div>
+      </dialog>
+      <dialog open={showGraph} className={styles.graphDialog}>
+        This is the graph!
+        <button onClick={() => setShowGraph(!showGraph)}>X</button>
+      </dialog>
     </div>
-  )
+  );
 }
 
-export default HeatMap
+export default HeatMap;
