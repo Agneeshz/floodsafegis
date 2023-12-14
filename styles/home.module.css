@@ -5,13 +5,22 @@
 .searchDiv{
     margin-left: 2vw;
 }
+.searchDiv input:hover{
+    width: 12vw;
+    transform: scale(1.1);
+    border-radius: 4px;
+    outline: 1px rgb(150, 236, 124) solid;
+    transition: all ease-in-out 0.3s;
+    
+}
 .searchDiv input{
     width: 8vw;
     font-size: 1vw;
     padding: 0.3vw 0.3vw;
     color: black;
-    outline:none;
+    outline:1px rgb(3, 197, 241) solid;
     border:none;
+    transition: all ease-in-out 0.3s;
 }
 .searchAndView{
     position: absolute;
