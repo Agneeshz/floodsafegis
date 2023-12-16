@@ -1,9 +1,13 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "@/styles/heatmap.module.css";
 import Button from './Button';
-function HeatMap({day, defaultProps, heatMapData}) {
+import LinechartWL from './LinechartWL';
+import { findClosestPoint } from '@/utils/closest_point';
+import LineChartWeather from './LineChartWeather';
+function HeatMap({ day, defaultProps, heatMapData, markers ,stations}) {
+  console.log({stations});
   const mapOptions = {
     fullscreenControl: false,
   };
@@ -12,14 +16,33 @@ function HeatMap({day, defaultProps, heatMapData}) {
   const [isOpen, setIsOpen] = useState(false);
   const [population, setPopulation] = useState("94,927");
   const [showGraph, setShowGraph] = useState(false);
+  const [closestPoint, setClosestPoint] = useState({})
+
 
   const handleMapClick = (event) => {
     setSelectedPoint({
       lat: event.lat,
       lng: event.lng,
     });
+
+    const pointsArray = stations?.map((item)=>{
+      return {
+
+        ...item,
+        lon:item?.lng
+      }
+    })
+
+    setClosestPoint(findClosestPoint({lat:event.lat, lon:event.lng}, pointsArray))
+
+
     setIsOpen(!isOpen);
   };
+
+
+  
+
+
   return (
     <div
       className=""
@@ -35,6 +58,10 @@ function HeatMap({day, defaultProps, heatMapData}) {
         heatmap={heatMapData}
         onClick={handleMapClick}
       ></GoogleMapReact>
+
+
+
+
       {showGraph && <div className={styles.backdrop}></div>}
       <dialog open={isOpen} className={styles.dialogBox}>
         <p>Location: Chenimari</p>
@@ -50,7 +77,8 @@ function HeatMap({day, defaultProps, heatMapData}) {
         </div>
       </dialog>
       <dialog open={showGraph} className={styles.graphDialog}>
-        This is the graph!
+        {/* <Linechart data={closestPoint} /> */}
+        <LineChartWeather  lat={closestPoint?.lat} lng={closestPoint?.lon} />
         <button onClick={() => setShowGraph(!showGraph)}>X</button>
       </dialog>
     </div>
