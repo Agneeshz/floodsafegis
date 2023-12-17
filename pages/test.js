@@ -77,9 +77,9 @@ export default function Test() {
 
   return (
    <>
-    
+          
 
-          <HeatMap  day={day} defaultProps={defaultProps} heatMapData={heatMapData}/>
+          <HeatMap  day={day} defaultProps={defaultProps} heatMapData={heatMapData} data={{}}/>
       
    </>
   )

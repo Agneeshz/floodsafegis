@@ -21,3 +21,8 @@ html {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
+.recharts-wrapper{
+  width: 100% !important;
+  height: 100% !important;
+}

@@ -18,13 +18,7 @@ export default function Map({stations}) {
   const [day, setDay] = useState(1)
 
 
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627
-    },
-    zoom: 11
-  };
+
   const get_DL_WL  = (inputString) =>{
 
 
@@ -122,13 +116,26 @@ export default function Map({stations}) {
     opacity: 0.6,
     
 }}
-
+const defaultProps = {
+  center: {
+    lat: 10.99835602,
+    lng: 77.01502627
+  },
+  zoom: 11,
+  markers:heatMapData?.positions?.map((item,id)=>{
+    return {
+      id:id,
+      lat:item?.lat,
+      lng:item?.lng
+    }
+  })
+};
 
   return (
    <>
     
 
-          <HeatMap stations={stations} day={day} defaultProps={defaultProps} heatMapData={heatMapData}/>
+          <HeatMap stations={stations} day={day} defaultProps={defaultProps} heatMapData={heatMapData} markers={heatMapData?.positions}/>
       
    </>
   )
