@@ -13,12 +13,17 @@
 }
 .graphDialog{
     position: absolute;
-    top:20%;
+    top:10%;
+    left: 15%;
+    background-color: white;
     width: 70%;
-    height: 70%;
+    height: 75%;
     border: 1px solid gray;
-    padding: 1vw;
+    padding: 0.3vw;
     z-index: 10000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .graphDialog button{
     position: relative;
@@ -36,4 +41,35 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.779);
     z-index: 99;
+  }
+  .graphDialog .graph{
+    height: 90%;
+    width: 80%;
+    border-left: 1px solid #656464;
+  }
+  .graphDialog .toggle{
+    height: 100%;
+    width: 12%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    
+  }
+  .toggle .waterLevel{
+    border: 1px gray solid;
+    padding: 0.5vw;
+  }
+  .toggle .weather{
+    border: 1px gray solid;
+    padding: 0.5vw;
+  }
+  .toggle .waterLevel:hover{
+    cursor: pointer;
+  }
+  .toggle .weather:hover{
+    cursor: pointer;
+  }
+  .closeBtn{
+    height: 100%;
   }

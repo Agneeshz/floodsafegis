@@ -82,7 +82,7 @@ const Landing = () => {
               alignment="center"
               width="9vw"
               arrow={true}
-              href={"/"}
+              href={"/map"}
             />
           </div>
         </div>
