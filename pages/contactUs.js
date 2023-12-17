@@ -1,5 +1,5 @@
 import React from "react";
-
+import Layout from "@/components/Layout";
 const contactUs = () => {
   return (
     <div>
@@ -10,5 +10,7 @@ const contactUs = () => {
     </div>
   );
 };
-
+contactUs.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 export default contactUs;

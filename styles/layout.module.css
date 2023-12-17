@@ -10,11 +10,12 @@
     height: 5vh;
   }
   .content {
-    background: rgb(217, 217, 217);
     display: flex;
     align-items: center;
     justify-content: center;
     height: 83vh;
     width: 100%;
   }
-  
+  .logoFloodSafeGIS:hover{
+    cursor: pointer;
+  }

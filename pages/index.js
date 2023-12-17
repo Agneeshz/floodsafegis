@@ -1,7 +1,8 @@
 import HeatMap from "@/components/HeatMap";
 import "react-select-search/style.css";
-import styles from "@/styles/home.module.css";
+import styles from "@/styles/index.module.css";
 import { useState } from "react";
+import Layout from "@/components/Layout";
 export default function Home() {
   const [searchText, setSearchText] = useState("");
   const [showViews, setShowViews] = useState(false);
@@ -86,3 +87,6 @@ export default function Home() {
     </div>
   );
 }
+Home.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};

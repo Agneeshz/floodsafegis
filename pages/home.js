@@ -1,12 +1,18 @@
 import Landing from "@/components/landing";
 import React from "react";
-
-const Home = () => {
+import Layout from "@/components/Layout";
+const LandingPage = () => {
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%" }}>
       <Landing />
     </div>
   );
 };
-
-export default Home;
+LandingPage.getLayout = function getLayout(page) {
+  return (
+    <Layout height="auto" footerLanding={true}>
+      {page}
+    </Layout>
+  );
+};
+export default LandingPage;

@@ -1,14 +1,20 @@
 import React from "react";
 import Button from "./Button";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
+import styles from "@/styles/layout.module.css";
 function Navbar() {
+  const router = useRouter();
   return (
     <div
       className="flex justify-between px-16 py-4 items-center border-b-2"
       style={{ height: "100%" }}
     >
-      <div className="flex justify-center items-center">
+      <div
+        className={`flex justify-center items-center ${styles.logoFloodSafeGIS}`}
+        onClick={() => router.push("/home")}
+        id={styles.logoFloodSafeGIS}
+      >
         <div className="bg-gray-600 rounded-full h-10 w-10"></div>
         <div className="text-2vw ml-4 font-semibold">FloodSafeGIS</div>
       </div>
@@ -18,17 +24,23 @@ function Navbar() {
       >
         <div>
           {" "}
-          <Link href={"/home"}>Home</Link>
+          <Link href={"/aboutUs"}>About</Link>
         </div>
         <div>
-          <Link href={"/"}>Explore</Link>
+          <Link href={"/home/#features"}>Features</Link>
+        </div>
+        <div>
+          <Link href={"/home/#howItWorks"}>How it Works?</Link>
+        </div>
+        <div>
+          <Link href={"/home/#FAQS"}>FAQS</Link>
         </div>
         <div>
           <Link href={"/contactUs"}>Contact Us</Link>
         </div>
       </div>
       <div>
-        <Button text={"Login/Register ➡️"} />
+        <Button text={"Login/Register"} arrow={true} href={"/login"} />
       </div>
     </div>
   );
