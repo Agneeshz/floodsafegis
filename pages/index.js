@@ -19,7 +19,7 @@ export default function Home() {
   };
   return (
     <div className={styles.homeContainer}>
-      <HeatMap />
+      {/* <HeatMap /> */}
       <div className={styles.searchAndView}>
         <div className={styles.searchDiv}>
           <input

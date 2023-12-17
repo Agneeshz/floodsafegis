@@ -1,42 +1,13 @@
-import React, { useState } from "react";
-import GoogleMapReact from "google-map-react";
-import Button from "./Button";
+import React from 'react'
+import GoogleMapReact from 'google-map-react';
+import { useState, useEffect } from 'react';
 import styles from "@/styles/heatmap.module.css";
-
-function HeatMap() {
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 1,
-  };
-
-  const heatMapData = {
-    positions: [
-      {
-        lat: 10.99835602,
-        lng: 77.01502627,
-      },
-      {
-        lat: 12.99835602,
-        lng: 79.01502627,
-      },
-      {
-        lat: 14.99835602,
-        lng: 79.01502627,
-      },
-      {
-        lat: 13.99835602,
-        lng: 79.01502627,
-      },
-    ],
-    options: {
-      radius: 20,
-      opacity: 0.6,
-    },
-  };
-
+import Button from './Button';
+import LinechartWL from './LinechartWL';
+import { findClosestPoint } from '@/utils/closest_point';
+import LineChartWeather from './LineChartWeather';
+function HeatMap({ day, defaultProps, heatMapData, markers ,stations}) {
+  console.log({stations});
   const mapOptions = {
     fullscreenControl: false,
   };
@@ -45,14 +16,32 @@ function HeatMap() {
   const [isOpen, setIsOpen] = useState(false);
   const [population, setPopulation] = useState("94,927");
   const [showGraph, setShowGraph] = useState(false);
+  const [closestPoint, setClosestPoint] = useState({})
+
 
   const handleMapClick = (event) => {
     setSelectedPoint({
       lat: event.lat,
       lng: event.lng,
     });
+
+    const pointsArray = stations?.map((item)=>{
+      return {
+
+        ...item,
+        lon:item?.lng
+      }
+    })
+
+    setClosestPoint(findClosestPoint({lat:event.lat, lon:event.lng}, pointsArray))
+
+
     setIsOpen(!isOpen);
   };
+
+
+  
+
 
   return (
     <div
@@ -69,6 +58,10 @@ function HeatMap() {
         heatmap={heatMapData}
         onClick={handleMapClick}
       ></GoogleMapReact>
+
+
+
+
       {showGraph && <div className={styles.backdrop}></div>}
       <dialog open={isOpen} className={styles.dialogBox}>
         <p>Location: Chenimari</p>
@@ -84,7 +77,8 @@ function HeatMap() {
         </div>
       </dialog>
       <dialog open={showGraph} className={styles.graphDialog}>
-        This is the graph!
+        {/* <Linechart data={closestPoint} /> */}
+        <LineChartWeather  lat={closestPoint?.lat} lng={closestPoint?.lon} />
         <button onClick={() => setShowGraph(!showGraph)}>X</button>
       </dialog>
     </div>
