@@ -32,22 +32,21 @@ const Landing = () => {
     {
       question: "What is FloodSafeGIS?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id suscipit sint repudiandae earum vitae a voluptate animi corporis laboriosam. Doloremque, non! Incidunt alias minima ullam placeat minus adipisci aliquid nemo.",
+        "FloodSafeGIS, our innovative AI-powered Geographic Information System (GIS) application, utilizes historical satellite imagery to predict and visualize flood inundation extent and water depth in near real-time for specific Central Water Commission (CWC) forecast sites. By offering real-time flood extent maps, this technology equips local governments and disaster management agencies with a crucial tool to swiftly identify vulnerable areas during floods, enabling them to prioritize and optimize rescue and relief efforts effectively.",
     },
     {
       question: "How does FloodSafeGIS work?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id suscipit sint repudiandae earum vitae a voluptate animi corporis laboriosam. Doloremque, non! Incidunt alias minima ullam placeat minus adipisci aliquid nemo.",
+        "FloodSafeGIS, leveraging Sentinel-1 SAR datasets, predicts floods in three stages. Stage 1 employs U-NET and Encoder-Decoder models to estimate inundation extent. In Stage 2, flood prediction imagery and DEM yield water depth estimates. Stage 3 visualizes results in Google Maps GIS, enhancing accessibility and utility.",
     },
     {
       question: "How can I get started with FloodSafeGIS?",
       answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id suscipit sint repudiandae earum vitae a voluptate animi corporis laboriosam. Doloremque, non! Incidunt alias minima ullam placeat minus adipisci aliquid nemo.",
+        "To initiate your journey with FloodSafeGIS, start by navigating our intuitive user interface. Familiarize yourself with the diverse functionalities offered, allowing you to seamlessly explore the robust features that FloodSafeGIS provides. This user-friendly experience will pave the way for a smooth and efficient utilization of the platform's capabilities.",
     },
     {
       question: "Is there customer support available for users?",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id suscipit sint repudiandae earum vitae a voluptate animi corporis laboriosam. Doloremque, non! Incidunt alias minima ullam placeat minus adipisci aliquid nemo.",
+      answer: "Customer support is coming soon",
     },
   ];
   return (
