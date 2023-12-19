@@ -44,7 +44,11 @@ const LoginComp = ({ type }) => {
           maxAge: 30 * 24 * 60 * 60, // 30 days
           path: '/',
         });
-        router.push("/map")
+        if (formData['username'] === 'admin' && formData['password'] === 'SIH') {
+          router.push("/admin/dashboard")
+        } else {
+          router.push("/map")
+        }
       }
 
     } catch (error) {
