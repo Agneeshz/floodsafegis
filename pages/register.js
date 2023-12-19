@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "@/components/Layout";
 const register = () => {
   return (
-    <div style={{ width: "25%" }}>
+    <div style={{ width: "35%" }}>
       <LoginComp type="register" />
     </div>
   );

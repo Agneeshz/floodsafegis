@@ -8,7 +8,10 @@ const FAQStrip = ({ question, answer }) => {
     <div className={styles.FAQStrip} onClick={() => setShowAnswer(!showAnswer)}>
       <div className={styles.FAQQues}>{question}</div>
       <div className={styles.toggleFAQ}>
-        <FontAwesomeIcon icon={showAnswer ? faAngleUp : faAngleDown} />
+        <FontAwesomeIcon
+          size={"xs"}
+          icon={showAnswer ? faAngleUp : faAngleDown}
+        />
       </div>
       {showAnswer && <div className={styles.FAQAnswer}>{answer}</div>}
     </div>

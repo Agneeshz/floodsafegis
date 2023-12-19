@@ -4,12 +4,13 @@
     /* width: 45%; */
     margin: auto;
     background-color: rgb(249,249,249);
-    padding: 2vw;
-    letter-spacing: 1px;
+    padding: 2.5vw;
+    letter-spacing: 0.5px;
     font-size: 0.8rem;
+    border-radius: 4px;
 }
 .loginContainer h2{
-    font-size: 1.3vw;
+    font-size: 1.6vw;
     padding-bottom: 2.5vh;
     border-bottom: 1.5px  #2a292980 solid;
     font-weight: 500;
@@ -52,6 +53,7 @@ cursor: pointer;
 }
 .switchDialog{
     text-align: center;
+    color:#0D0D0D80
 }
 .switchDialog span{
     color:#60A5FA;
