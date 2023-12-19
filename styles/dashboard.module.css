@@ -1,0 +1,38 @@
+.parentContainer{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: 2vw 4vw;
+}
+
+.toggleContainer{
+    display: flex;
+    height: auto;
+    width: 100%;
+    gap:3vw;
+    border-bottom: 1.5px gray solid;
+    margin-bottom: 6vh;
+    padding-bottom: 1.5vh;
+    color: gray;
+}
+.newListing:hover{
+    cursor: pointer;
+}
+.viewListing:hover{
+    cursor: pointer;
+}
+.bottomContainer{
+    height: 85%;
+    width: 70%;
+    background-color: gray;
+    margin: auto;
+}
+
+.bottomContainer >div{
+    height: 100%;
+    width: 100%;
+}
+
+#mapContainer:first-child{
+    position: relative !important;
+}
