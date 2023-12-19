@@ -8,11 +8,12 @@ import { findClosestPoint } from "@/utils/closest_point";
 import LineChartWeather from "./LineChartWeather";
 import { useRouter } from "next/router"
 function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
+  // console.log({ stations });
 
   const mapOptions = {
     fullscreenControl: false,
   };
-  const router= useRouter()
+  const router = useRouter()
   console.log(router.pathname)
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -38,8 +39,7 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
     );
 
     setIsOpen(!isOpen);
-    };
-    console.log({closestPoint});
+  };
   return (
     <div
       className=""
@@ -58,8 +58,8 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
 
       {showGraph && <div className={styles.backdrop}></div>}
       <dialog open={isOpen} className={styles.dialogBox}>
-        <p>Location: {router.pathname == "/waterlevelmap" && closestPoint ? closestPoint['site-name']:"CHENIMARI"}</p>
-        <p>Area Status: {router.pathname == "/waterlevelmap" && closestPoint && closestPoint['day-1-forecast'] ? closestPoint['day-1-forecast']['flood-condition']:"CHENIMARI"}</p>
+        <p>Location: {router.pathname == "/waterlevelmap" && closestPoint ? closestPoint['site-name'] : "CHENIMARI"}</p>
+        <p>Area Status: {router.pathname == "/waterlevelmap" && closestPoint && closestPoint['day-1-forecast'] ? closestPoint['day-1-forecast']['flood-condition'] : "CHENIMARI"}</p>
         <p>Population:{population}</p>
         <p>Initial Water Level: 827</p>
         <p>Nearest Rescue Zone: Dibrugarh</p>
@@ -74,7 +74,7 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
         <div
           // open={showGraph}
           className={styles.graphDialog}
-          // style={{ zIndex: !showGraph && -1 }}
+        // style={{ zIndex: !showGraph && -1 }}
         >
           <div className={styles.toggle}>
             <div

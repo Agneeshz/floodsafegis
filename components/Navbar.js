@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "@/styles/layout.module.css";
+import { parseCookies } from 'nookies';
+
 function Navbar() {
   const router = useRouter();
+  const [authtoken, setAuthtoken] = useState(null)
+  useEffect(() => {
+    const cookies = parseCookies();
+    const token = cookies.authToken;
+    console.log(token)
+    setAuthtoken(token)
+    console.log(authtoken)
+
+  }, [])
+
+
   return (
     <div
       className="flex justify-between px-16 py-4 items-center border-b-2"
@@ -39,9 +52,11 @@ function Navbar() {
           <Link href={"/contactUs"}>Contact Us</Link>
         </div>
       </div>
-      <div>
-        <Button text={"Login/Register"} arrow={true} href={"/login"} />
-      </div>
+      {authtoken == null ?
+        <div>
+          <Button text={"Login/Register"} arrow={true} href={"/login"} />
+        </div> : <></>
+      }
     </div>
   );
 }

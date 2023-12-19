@@ -5,7 +5,7 @@ import HeatMap from "@/components/HeatMap";
 import SelectSearch from "react-select-search";
 import "react-select-search/style.css";
 import { get_all_stations_wl_forecast } from "@/utils/api_call";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import styles from "@/styles/index.module.css";
 const inter = Inter({ subsets: ["latin"] });
