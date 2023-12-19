@@ -6,17 +6,19 @@ import Button from "./Button";
 import LinechartWL from "./LinechartWL";
 import { findClosestPoint } from "@/utils/closest_point";
 import LineChartWeather from "./LineChartWeather";
+import { useRouter } from "next/router"
 function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
-  console.log({ stations });
+
   const mapOptions = {
     fullscreenControl: false,
   };
-
+  const router= useRouter()
+  console.log(router.pathname)
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [population, setPopulation] = useState("94,927");
   const [showGraph, setShowGraph] = useState(false);
-  const [closestPoint, setClosestPoint] = useState({});
+  const [closestPoint, setClosestPoint] = useState(null);
   const [showWL, setShowWL] = useState(false);
   const handleMapClick = (event) => {
     setSelectedPoint({
@@ -36,8 +38,8 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
     );
 
     setIsOpen(!isOpen);
-  };
-
+    };
+    console.log({closestPoint});
   return (
     <div
       className=""
@@ -56,8 +58,8 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
 
       {showGraph && <div className={styles.backdrop}></div>}
       <dialog open={isOpen} className={styles.dialogBox}>
-        <p>Location: Chenimari</p>
-        <p>Area Status: Safe</p>
+        <p>Location: {router.pathname == "/waterlevelmap" && closestPoint ? closestPoint['site-name']:"CHENIMARI"}</p>
+        <p>Area Status: {router.pathname == "/waterlevelmap" && closestPoint && closestPoint['day-1-forecast'] ? closestPoint['day-1-forecast']['flood-condition']:"CHENIMARI"}</p>
         <p>Population:{population}</p>
         <p>Initial Water Level: 827</p>
         <p>Nearest Rescue Zone: Dibrugarh</p>
