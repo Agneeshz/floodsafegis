@@ -7,8 +7,9 @@ import 'react-select-search/style.css'
 import { get_all_stations_wl_forecast, get_forecast_wl_station, get_water_level_vitals } from '@/utils/api_call';
 import { useState } from 'react';
 import data from "@/utils/optimised_water_coordinates.json"
+import styles from "@/styles/index.module.css";
 const inter = Inter({ subsets: ['latin'] })
-
+import Layout from "@/components/Layout";
 export default function Test({forecast, vitals}) {
   
   const [day, setDay] = useState(7)
@@ -44,3 +45,6 @@ export async function getServerSideProps(context) {
   }
 }
 
+Test.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
