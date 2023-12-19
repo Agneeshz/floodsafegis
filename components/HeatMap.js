@@ -7,7 +7,7 @@ import LinechartWL from "./LinechartWL";
 import { findClosestPoint } from "@/utils/closest_point";
 import LineChartWeather from "./LineChartWeather";
 function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
-  console.log({ stations });
+  // console.log({ stations });
   const mapOptions = {
     fullscreenControl: false,
   };
@@ -72,7 +72,7 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
         <div
           // open={showGraph}
           className={styles.graphDialog}
-          // style={{ zIndex: !showGraph && -1 }}
+        // style={{ zIndex: !showGraph && -1 }}
         >
           <div className={styles.toggle}>
             <div

@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@coreui/react": "^4.11.0",
-    "axios": "^1.6.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
@@ -18,8 +17,10 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-spring/web": "^9.7.3",
     "animate.css": "^4.1.1",
+    "axios": "^1.6.2",
     "google-map-react": "^2.2.1",
     "next": "^14.0.4",
+    "nookies": "^2.5.2",
     "react": "^18",
     "react-animate-on-scroll": "^2.1.7",
     "react-date-picker": "^10.6.0",
