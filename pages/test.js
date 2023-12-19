@@ -4,85 +4,47 @@ import Navbar from '@/components/Navbar';
 import HeatMap from '@/components/HeatMap';
 import SelectSearch from 'react-select-search';
 import 'react-select-search/style.css'
-import { get_all_stations_wl_forecast } from '@/utils/api_call';
+import { get_all_stations_wl_forecast, get_forecast_wl_station, get_water_level_vitals } from '@/utils/api_call';
 import { useState } from 'react';
 import data from "@/utils/optimised_water_coordinates.json"
+import styles from "@/styles/index.module.css";
 const inter = Inter({ subsets: ['latin'] })
-
-export default function Test() {
-  const options = [
-    {name: 'Chenimari', value: 'sv'},
-    {name: 'Chaparmukh', value: 'en'},
- 
-  ];
-  let coordinates = data?.map((item)=>{
-    return {
-      lat:item.latitude,
-      lng:item.longitude,
-      weight:2
-    }
-  })
-  console.log({coordinates});
-
-  const [day, setDay] = useState(1)
-
-
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627
-    },
-    zoom: 11
-  };
- 
-
+import Layout from "@/components/Layout";
+export default function Test({forecast, vitals}) {
+  
+  const [day, setDay] = useState(7)
+  const [WLForecast, setWLForecast] = useState(forecast?.station[`day-${day}-forecast`])
 
   
 
-
-
-
-
-  const heatMapData = {    
-  // positions: [
-  //   {
-  //     lat: 10.99835602,
-  //     lng: 77.01502627,
-  //     weight:10,
-  //   },
-  //   {
-  //     lat: 12.99835602,
-  //     lng: 79.01502627,
-  //     weight:20
-  //   },
-  //   {
-  //     lat: 14.99835602,
-  //     lng: 79.01502627,
-  //     weight:10
-  //   },
-  //   {
-  //     lat: 13.99835602,
-  //     lng: 79.01502627,
-  //     weight:20
-  //   }
-  
-  // ],
-  positions:coordinates,
-  options: {   
-    radius: 10,   
-    opacity: 0.6,
-    
-}}
+  console.log({vitals});
 
 
   return (
    <>
           
 
-          <HeatMap  day={day} defaultProps={defaultProps} heatMapData={heatMapData} data={{}}/>
-      
+  
    </>
   )
 }
 
 
+export async function getServerSideProps(context) {
+
+  const forecast = await get_forecast_wl_station();
+  const vitals_data = await get_water_level_vitals();
+  console.log(vitals_data);
+  const vitals = await vitals_data?.vitals
+ 
+  // const stations = resp
+  console.log({forecast});
+
+  return {
+    props: {forecast, vitals},
+  }
+}
+
+Test.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
