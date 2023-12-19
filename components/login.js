@@ -1,22 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "@/styles/login.module.css";
 import Button from "./Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { setCookie } from 'nookies';
+import { BASE_API_URL } from "@/utils/constants";
+
 const LoginComp = ({ type }) => {
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    first_name: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (type) => {
+    try {
+      if (type === 'register') {
+        const response = await axios.post(`https://hydro-predict.onrender.com/auth/register/`, formData);
+        const authToken = response.data.token;
+
+        setCookie(null, 'authToken', authToken, {
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+          path: '/',
+        });
+
+        router.push("/map")
+      } else if (type === 'login') {
+        const response = await axios.post(`https://hydro-predict.onrender.com/auth/api-token-auth/`, {
+          username: formData['username'],
+          password: formData['password']
+        });
+        const authToken = response.data.token;
+
+        setCookie(null, 'authToken', authToken, {
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+          path: '/',
+        });
+        router.push("/map")
+      }
+
+    } catch (error) {
+      console.error("Something went wrong", error);
+    }
+  };
+
   return (
     <div className={styles.loginContainer}>
       {type === "login" ? <h2> Welcome Back!</h2> : <h2>Create Account</h2>}
       <div className={styles.inputList}>
         {type === "register" && (
-          <input type="text" placeholder="Enter your name" />
+          <>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleInputChange}
+            />
+            <input
+              type="email"
+              placeholder="Enter your email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+          </>
         )}
-        <input type="email" placeholder="Enter your email" />
-        <input type="text" placeholder="Enter your password" />
-        {type === "register" && (
-          <input type="text" placeholder="Re-enter your password" />
-        )}
+        <input
+          type="text"
+          placeholder="Enter a username"
+          name="username"
+          value={formData.username}
+          onChange={handleInputChange}
+        />
+        <input
+          type="password"
+          placeholder="Enter your password"
+          name="password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
       </div>
       <div className={styles.checkboxAndForgetPass}>
         <div className={styles.checkbox}>
@@ -32,7 +103,7 @@ const LoginComp = ({ type }) => {
           </div>
         )}
       </div>
-      <div className={styles.continueBtn}>
+      <div className={styles.continueBtn} onClick={() => (handleSubmit(type))}>
         <Button text={"Continue"} alignment="center" />
       </div>
       <div className={styles.switchDialog}>

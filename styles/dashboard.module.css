@@ -30,3 +30,12 @@
     background-color: gray;
     margin: auto;
 }
+
+.bottomContainer >div{
+    height: 100%;
+    width: 100%;
+}
+
+#mapContainer:first-child{
+    position: relative !important;
+}
