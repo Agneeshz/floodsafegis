@@ -15,6 +15,17 @@ export const get_all_stations_wl_forecast = async () => {
 }
 
 
+export const get_forecast_wl_station = async () =>{
+
+    try{
+        const resp = await axios.get(BASE_API_URL + 'get-forecast?site-name=CHENIMARI%20(KHOWANG)');
+        return resp?.data
+    }catch(e){
+        console.log(e);
+    }
+}
+
+
 
 export const get_weather_data = async (lat, lng) =>{
     try{
@@ -27,4 +38,24 @@ export const get_weather_data = async (lat, lng) =>{
         console.log(e);
 
     }
+}
+
+
+
+export const get_water_level_vitals = async () =>{
+
+    try{
+
+        const resp = await axios.get( BASE_API_URL + 'get-water-level-data/013-UBDDIB/2023-08-15T13:37/2023-09-15T13:37/')
+        console.log(resp.data);
+        return resp?.data
+
+
+    }catch(e){
+
+        console.log(e);
+
+    }
+
+
 }
