@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "@/styles/layout.module.css";
-import { parseCookies } from 'nookies';
+import { parseCookies } from "nookies";
 
 function Navbar() {
   const router = useRouter();
-  const [authtoken, setAuthtoken] = useState(null)
+  const [authtoken, setAuthtoken] = useState(null);
   useEffect(() => {
     const cookies = parseCookies();
     const token = cookies.authToken;
-    console.log(token)
-    setAuthtoken(token)
-    console.log(authtoken)
-
-  }, [])
-
+    console.log(token);
+    setAuthtoken(token);
+    console.log(authtoken);
+  }, []);
 
   return (
     <div
@@ -28,7 +27,9 @@ function Navbar() {
         onClick={() => router.push("/home")}
         id={styles.logoFloodSafeGIS}
       >
-        <div className="bg-gray-600 rounded-full h-10 w-10"></div>
+        <div className="bg-gray-600 rounded-full h-10 w-10">
+          <Image src="/logo.png" alt="Logo" width="100" height="100" />
+        </div>
         <div className="text-2vw ml-4 font-semibold">FloodSafeGIS</div>
       </div>
       <div
@@ -49,14 +50,16 @@ function Navbar() {
           <Link href={"/home/#FAQS"}>FAQS</Link>
         </div>
         <div>
-          <Link href={"/contactUs"}>Contact Us</Link>
+          <Link href={"/home/#footer"}>Contact Us</Link>
         </div>
       </div>
-      {authtoken == null ?
+      {authtoken == null ? (
         <div>
           <Button text={"Login/Register"} arrow={true} href={"/login"} />
-        </div> : <></>
-      }
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
