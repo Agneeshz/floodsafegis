@@ -10,7 +10,7 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/index.module.css";
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Map({ stations }) {
+export default function WaterLevelMap({ stations }) {
   const options = [
     { name: "Chenimari", value: "sv" },
     { name: "Chaparmukh", value: "en" },
@@ -192,6 +192,6 @@ export async function getServerSideProps(context) {
   };
 }
 
-Map.getLayout = function getLayout(page) {
+WaterLevelMap.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
