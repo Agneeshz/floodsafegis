@@ -23,12 +23,14 @@ const LoginComp = ({ type }) => {
           <input type="checkbox" name="remember" id="remember" />
           <label htmlFor="remember">Remember Me</label>
         </div>
-        <div
-          className={styles.forgotPass}
-          onClick={() => router.push("/forgotPassword")}
-        >
-          Forgot Password?
-        </div>
+        {type === "login" && (
+          <div
+            className={styles.forgotPass}
+            onClick={() => router.push("/forgotPassword")}
+          >
+            Forgot Password?
+          </div>
+        )}
       </div>
       <div className={styles.continueBtn}>
         <Button text={"Continue"} alignment="center" />
