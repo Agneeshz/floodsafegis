@@ -8,7 +8,7 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { ToastContainer, toast } from 'react-toastify';
 
-const DashboardComp = () => {
+const DashboardComp = ({shelters}) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [toggle, setToggle] = useState("addNew");
   const [authToken, setAuthToken] = useState(null);
@@ -74,7 +74,7 @@ const DashboardComp = () => {
         </div>
       </div>
       <div className={styles.bottomContainer}>
-        {toggle === "addNew" ? <AdminMap toggleModel={setModalIsOpen} updateForm={setFormData} /> : <ShelterListing />}
+        {toggle === "addNew" ? <AdminMap toggleModel={setModalIsOpen} updateForm={setFormData} shelters={shelters} /> : <ShelterListing />}
       </div>
       <dialog
         open={modalIsOpen}
