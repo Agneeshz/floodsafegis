@@ -75,8 +75,8 @@ const GoogleMap = ({ day,
         handleMapClick(event, map);
       });
       const bounds = new window.google.maps.LatLngBounds(
-        new window.google.maps.LatLng(27.1989373, 94.8118725),
-        new window.google.maps.LatLng(27.3428911, 94.9727933),
+        new window.google.maps.LatLng(27.1989373, 94.8119725),
+        new window.google.maps.LatLng(27.3428911, 94.9728933),
       );
       class USGSOverlay extends window.google.maps.OverlayView {
         bounds;

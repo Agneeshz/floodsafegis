@@ -10,6 +10,7 @@ function Button({
   href = null,
   fontSize = null,
   borderRadius = null,
+  color = null,
 }) {
   return (
     <div
@@ -20,6 +21,7 @@ function Button({
         width: width && width,
         borderRadius: "4px",
         cursor: "pointer",
+        background:color && color
       }}
     >
       {href && (

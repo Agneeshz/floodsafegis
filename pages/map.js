@@ -194,7 +194,7 @@ export default function Map({ stations, shelters }) {
               onChange={handleLevelChange}
               placeholder="Enter the water level"
             />
-            <div onClick={handleGenerateMap}><Button text={"Generate Map"} alignment="center" /></div>
+            <div onClick={handleGenerateMap} style={{pointerEvents:level<=0 && "none"}}><Button text={"Generate Map"} alignment="center" color={level<=0 && "gray"}/></div>
 
           </div>
         </div>
