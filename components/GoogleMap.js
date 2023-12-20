@@ -58,15 +58,15 @@ const GoogleMap = ({ day,
 
     setClosestPoint({ ...chenimariData, lon: chenimariData.lng })
 
-    setIsOpen((item)=> !item);
+    setIsOpen((item) => !item);
   };
   defaultProps.center = { latitude, longitude };
   console.log({ chenimariData });
   useEffect(() => {
     const initMap = () => {
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 11,
-        center: { lat: 27.342919, lng: 94.972796 },
+        zoom: 12,
+        center: { lng: 94.8922, lat: 27.2709 },
         // mapTypeId: "satellite",
         mapTypeControl: false,
         disableDefaultUI: true,
@@ -75,8 +75,8 @@ const GoogleMap = ({ day,
         handleMapClick(event, map);
       });
       const bounds = new window.google.maps.LatLngBounds(
-        new window.google.maps.LatLng(27.19899, 94.81182),
-        new window.google.maps.LatLng(27.342919, 94.972796),
+        new window.google.maps.LatLng(27.1989373, 94.8118725),
+        new window.google.maps.LatLng(27.3428911, 94.9727933),
       );
       class USGSOverlay extends window.google.maps.OverlayView {
         bounds;
