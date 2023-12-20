@@ -58,7 +58,7 @@ const GoogleMap = ({ day,
 
     setClosestPoint({ ...chenimariData, lon: chenimariData.lng })
 
-    setIsOpen(!isOpen);
+    setIsOpen((item)=> !item);
   };
   defaultProps.center = { latitude, longitude };
   console.log({ chenimariData });
