@@ -54,13 +54,13 @@ const GoogleMap = ({
       };
     }
   };
-  const handleMapClick = (e) => {
+  const handleMapClick = (event) => {
     setClosestPoint({ ...chenimariData, lon: chenimariData.lng });
 
-    if (isOpen === true) setIsOpen(false);
-    else setIsOpen(true);
-    console.log("isOPen", isOpen);
+    setIsOpen(!isOpen);
   };
+  defaultProps.center = { latitude, longitude };
+  console.log({ chenimariData });
 
   useEffect(() => {
     const initMap = () => {
@@ -75,21 +75,21 @@ const GoogleMap = ({
         handleMapClick(event, map);
       });
       const bounds = new window.google.maps.LatLngBounds(
-        new window.google.maps.LatLng(26.148136, 92.492067),
-        new window.google.maps.LatLng(26.238093, 92.591695)
+        new window.google.maps.LatLng(27.19899, 94.81182),
+        new window.google.maps.LatLng(27.342919, 94.972796)
       );
 
       let image = "/test2.png";
 
       class USGSOverlay extends window.google.maps.OverlayView {
         bounds;
-        image;
+        imageGen;
         div;
 
-        constructor(bounds, image) {
+        constructor(bounds) {
           super();
           this.bounds = bounds;
-          this.image = image;
+          this.image = imageGen;
         }
 
         onAdd() {
@@ -99,7 +99,7 @@ const GoogleMap = ({
           this.div.style.position = "absolute";
 
           const img = document.createElement("img");
-          img.src = this.image;
+          img.src = `data:image/jpeg;base64,${imageGen}`;
           img.style.width = "100%";
           img.style.height = "100%";
           img.style.position = "absolute";
@@ -164,7 +164,7 @@ const GoogleMap = ({
         }
       }
 
-      const overlay = new USGSOverlay(bounds, image);
+      const overlay = new USGSOverlay(bounds, imageGen);
       overlay.setMap(map);
 
       const toggleButton = document.createElement("button");

@@ -10,6 +10,7 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/index.module.css";
 import GoogleMap from "@/components/GoogleMap";
 import Button from "@/components/Button";
+import axios from "axios";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Map({ stations }) {
@@ -98,6 +99,7 @@ export default function Map({ stations }) {
   const places = ["Chenimari"];
   const [searchText, setSearchText] = useState("");
   const [showViews, setShowViews] = useState(false);
+  const [imageGen, setImageGen] = useState("");
   //Do whatever is needed with this date
   const [date, setDate] = useState(new Date());
   const handleInputChange = (e) => {
@@ -113,6 +115,23 @@ export default function Map({ stations }) {
   finalPlaces = places.filter((place) =>
     place.toLowerCase().startsWith(searchText.toLowerCase())
   );
+  const [level, setLevel] = useState(0)
+  const handleLevelChange = (e) => {
+    setLevel(e.target.value)
+  }
+  const handleGenerateMap = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/generate_map?water_level=${level}`);
+      setImageGen(response.data.image_base64);
+    } catch (error) {
+      console.error('Error making request:', error);
+      if (error.response) {
+        console.error('Response status:', error.response.status);
+        console.error('Response data:', error.response.data);
+      }
+    }
+
+  }
   console.log(finalPlaces);
   return (
     <>
@@ -127,16 +146,16 @@ export default function Map({ stations }) {
           markers={heatMapData?.positions}
         /> */}
         <div style={{ height: "80vh" }}  >
-          <GoogleMap  
-          
-          stations={stations}
-          day={day}
-          defaultProps={defaultProps}
-          latitude={latitude}
-          longitude={longitude}
-          heatMapData={heatMapData}
-          markers={heatMapData?.positions}
-          
+          <GoogleMap
+
+            stations={stations}
+            day={day}
+            defaultProps={defaultProps}
+            latitude={latitude}
+            longitude={longitude}
+            heatMapData={heatMapData}
+            markers={heatMapData?.positions}
+            imageGen={imageGen}
           />
         </div>
 
@@ -160,9 +179,11 @@ export default function Map({ stations }) {
                 width: "14vw",
                 borderRadius: "4px",
               }}
+              onChange={handleLevelChange}
               placeholder="Enter the water level"
             />
-            <Button text={"Generate Map"} alignment="center" />
+            <div onClick={handleGenerateMap}><Button text={"Generate Map"} alignment="center" /></div>
+
           </div>
         </div>
       </div>
