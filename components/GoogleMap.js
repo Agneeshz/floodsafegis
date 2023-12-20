@@ -96,7 +96,7 @@ const GoogleMap = ({ day,
           this.div.style.position = "absolute";
 
           const img = document.createElement("img");
-          img.src = `data:image/jpeg;base64,${imageGen}`;
+          img.src = `${imageGen}`;
           img.style.width = "100%";
           img.style.height = "100%";
           img.style.position = "absolute";
@@ -215,7 +215,7 @@ const GoogleMap = ({ day,
     } else {
       initMap();
     }
-  }, []);
+  }, [imageGen]);
   return <div>
     <div id="map" style={{ height: "83vh" }}></div>
     {showGraph && <div className={styles.backdrop}></div>}
