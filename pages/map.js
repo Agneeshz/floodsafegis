@@ -126,8 +126,18 @@ export default function Map({ stations }) {
           heatMapData={heatMapData}
           markers={heatMapData?.positions}
         /> */}
-        <div style={{ height: "80vh" }}>
-          <GoogleMap />
+        <div style={{ height: "80vh" }}  >
+          <GoogleMap  
+          
+          stations={stations}
+          day={day}
+          defaultProps={defaultProps}
+          latitude={latitude}
+          longitude={longitude}
+          heatMapData={heatMapData}
+          markers={heatMapData?.positions}
+          
+          />
         </div>
 
         <div className={styles.searchAndView}>
