@@ -10,14 +10,20 @@ const DashboardComp = () => {
       <div className={styles.toggleContainer}>
         <div
           className={styles.newListing}
-          style={{ color: toggle === "addNew" && "black" }}
+          style={{
+            color: toggle === "addNew" && "black",
+            fontWeight: toggle === "addNew" && "bold",
+          }}
           onClick={() => setToggle("addNew")}
         >
           ADD NEW
         </div>
         <div
           className={styles.viewListing}
-          style={{ color: toggle === "listing" && "black" }}
+          style={{
+            color: toggle === "listing" && "black",
+            fontWeight: toggle === "listing" && "bold",
+          }}
           onClick={() => setToggle("listing")}
         >
           LISTINGS

@@ -5,7 +5,8 @@
     flex-direction: column;
     padding: 2vw 4vw;
     font-family: 'Poppins', sans-serif;
-    letter-spacing: 0.5px;
+    font-size: 1.1vw;
+    /* letter-spacing: 0.5px; */
 }
 
 .toggleContainer{
@@ -13,7 +14,7 @@
     height: auto;
     width: 100%;
     gap:3vw;
-    border-bottom: 1.5px gray solid;
+    border-bottom: 2px rgba(128, 128, 128, 0.356) solid;
     margin-bottom: 6vh;
     padding-bottom: 1.5vh;
     color: gray;

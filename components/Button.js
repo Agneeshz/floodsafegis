@@ -19,6 +19,7 @@ function Button({
         textAlign: alignment,
         width: width && width,
         borderRadius: "4px",
+        cursor: "pointer",
       }}
     >
       {href && (
