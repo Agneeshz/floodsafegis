@@ -57,13 +57,13 @@ const GoogleMap = ({ day,
   };
   const handleMapClick = (event) => {
 
-
+    console.log("click");
     setClosestPoint({ ...chenimariData, lon: chenimariData.lng })
 
-    setIsOpen(!isOpen);
+    setIsOpen((e)=>!e);
   };
   defaultProps.center = { latitude, longitude };
-  console.log({ chenimariData });
+  console.log({ isOpen });
 
 
 
