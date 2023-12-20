@@ -59,3 +59,15 @@ export const get_water_level_vitals = async () =>{
 
 
 }
+
+
+
+export const get_shelters = async () =>{
+    try{
+        const resp = await axios.get(BASE_API_URL + 'shelters/')
+        return resp?.data
+
+    }catch(e){
+        console.log(e);
+    }
+}

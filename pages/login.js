@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import LoginComp from "@/components/login";
 const login = () => {
   return (
-    <div style={{ width: "25%" }}>
+    <div style={{ width: "35%" }}>
       <LoginComp type="login" />
     </div>
   );

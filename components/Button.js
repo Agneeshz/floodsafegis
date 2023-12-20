@@ -8,11 +8,19 @@ function Button({
   width = null,
   arrow = null,
   href = null,
+  fontSize = null,
+  borderRadius = null,
 }) {
   return (
     <div
       className="bg-blue-400 text-white font-medium rounded-md py-2 px-4"
-      style={{ fontSize: "1vw", textAlign: alignment, width: width && width }}
+      style={{
+        fontSize: fontSize ? fontSize : "1vw",
+        textAlign: alignment,
+        width: width && width,
+        borderRadius: "4px",
+        cursor: "pointer",
+      }}
     >
       {href && (
         <Link href={href}>

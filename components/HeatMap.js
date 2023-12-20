@@ -6,20 +6,55 @@ import Button from "./Button";
 import LinechartWL from "./LinechartWL";
 import { findClosestPoint } from "@/utils/closest_point";
 import LineChartWeather from "./LineChartWeather";
-import { useRouter } from "next/router"
-function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
-
+import { useRouter } from "next/router";
+function HeatMap({
+  day,
+  defaultProps,
+  latitude,
+  longitude,
+  heatMapData,
+  markers,
+  stations,
+}) {
   const mapOptions = {
     fullscreenControl: false,
   };
-  const router= useRouter()
-  console.log(router.pathname)
+  const router = useRouter();
+  console.log(router.pathname);
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [population, setPopulation] = useState("94,927");
   const [showGraph, setShowGraph] = useState(false);
   const [closestPoint, setClosestPoint] = useState(null);
   const [showWL, setShowWL] = useState(false);
+
+  const [chenimariData, setChenimariData] = useState(
+    stations.filter((item) => item["site-name"] == "CHENIMARI (KHOWANG)")[0]
+  );
+
+  const get_DL_WL = (inputString) => {
+    const regex = /(\d+\.\d+);(\d+\.\d+):(\d+\.\d+)/;
+
+    const matches = inputString.match(regex);
+    // console.log({inputString});
+
+    if (matches) {
+      const [, value1, value2, value3] = matches;
+
+      return {
+        WL: value1,
+        DL: value2,
+        HFL: value3,
+      };
+    } else {
+      console.log("No match found.");
+      return {
+        WL: 0,
+        DL: 0,
+        HFL: 0,
+      };
+    }
+  };
   const handleMapClick = (event) => {
     setSelectedPoint({
       lat: event.lat,
@@ -38,8 +73,9 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
     );
 
     setIsOpen(!isOpen);
-    };
-    console.log({closestPoint});
+  };
+  defaultProps.center = { latitude, longitude };
+  console.log({ chenimariData });
   return (
     <div
       className=""
@@ -58,11 +94,39 @@ function HeatMap({ day, defaultProps, heatMapData, markers, stations }) {
 
       {showGraph && <div className={styles.backdrop}></div>}
       <dialog open={isOpen} className={styles.dialogBox}>
-        <p>Location: {router.pathname == "/waterlevelmap" && closestPoint ? closestPoint['site-name']:"CHENIMARI"}</p>
-        <p>Area Status: {router.pathname == "/waterlevelmap" && closestPoint && closestPoint['day-1-forecast'] ? closestPoint['day-1-forecast']['flood-condition']:"CHENIMARI"}</p>
-        <p>Population:{population}</p>
-        <p>Initial Water Level: 827</p>
-        <p>Nearest Rescue Zone: Dibrugarh</p>
+        <p>
+          Location:{" "}
+          {router.pathname == "/waterlevelmap" && closestPoint
+            ? closestPoint["site-name"]
+            : chenimariData["site-name"]}
+        </p>
+        <p>
+          Area Status:{" "}
+          {router.pathname == "/waterlevelmap" &&
+          closestPoint &&
+          closestPoint["day-1-forecast"]
+            ? closestPoint["day-1-forecast"]["flood-condition"]
+            : chenimariData["day-1-forecast"]["flood-condition"]}
+        </p>
+        <p>
+          Warning Level:{" "}
+          {router.pathname == "/waterlevelmap" && closestPoint
+            ? get_DL_WL(closestPoint["WL;DL;HFL"])?.WL
+            : get_DL_WL(chenimariData["WL;DL;HFL"])?.WL}
+        </p>
+        <p>
+          Danger Level:{" "}
+          {router.pathname == "/waterlevelmap" && closestPoint
+            ? get_DL_WL(closestPoint["WL;DL;HFL"])?.DL
+            : get_DL_WL(chenimariData["WL;DL;HFL"])?.DL}
+        </p>
+
+        <p>
+          River :{" "}
+          {router.pathname == "/waterlevelmap" && closestPoint
+            ? closestPoint["river"]
+            : chenimariData["river"]}
+        </p>
         <div
           onClick={() => setShowGraph(!showGraph)}
           className={styles.generateGraphBtn}

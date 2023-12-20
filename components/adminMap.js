@@ -16,6 +16,8 @@ const AdminMap = (props) => {
     const lng = latLng.lng();
 
     setMarkerPosition({ lat, lng });
+    props.toggleModel(true)
+    props.updateForm({ lat: lat, lng: lng })
   };
   return (
     <div className="w-full h-full " id="mapContainer">
@@ -29,6 +31,10 @@ const AdminMap = (props) => {
         }}
         onClick={handleMapClick}
       >
+
+        {props?.shelters?.map((item)=>{
+          return <Marker position={{lat:item.lat, lng:item.lng}}></Marker>
+        })}
         {markerPosition && (
           <Marker
             position={markerPosition}

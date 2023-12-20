@@ -9,7 +9,7 @@ import {
 import Button from "./Button";
 const FooterLanding = () => {
   return (
-    <div className={styles.footerContainer}>
+    <div className={styles.footerContainer} id="footer">
       <div className={styles.footerTop}>
         <div className={styles.footerLeft}>
           <div>
