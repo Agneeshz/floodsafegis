@@ -101,7 +101,7 @@ export default function Map({ stations, shelters }) {
   const places = ["Chenimari"];
   const [searchText, setSearchText] = useState("");
   const [showViews, setShowViews] = useState(false);
-  const [imageGen, setImageGen] = useState("");
+  const [imageGen, setImageGen] = useState("/transparent.png");
   //Do whatever is needed with this date
   const [date, setDate] = useState(new Date());
   const handleInputChange = (e) => {
@@ -123,12 +123,12 @@ export default function Map({ stations, shelters }) {
   }
   const handleGenerateMap = async () => {
     try {
-      
+
       // const response = await axios.get(`http://127.0.0.1:8000/generate_map?water_level=${level}`);
       // setImageGen(response.data.image_base64);
 
-      let closest_wl = findClosestNumber(level,wls)
-      console.log({closest_wl});
+      let closest_wl = findClosestNumber(level, wls)
+      console.log({ closest_wl });
 
 
 
@@ -142,7 +142,7 @@ export default function Map({ stations, shelters }) {
     }
 
   }
-  console.log({wls});
+  console.log({ wls });
   return (
     <>
       <div className={styles.homeContainer}>
@@ -167,7 +167,7 @@ export default function Map({ stations, shelters }) {
             markers={heatMapData?.positions}
             imageGen={imageGen}
             shelters={shelters}
-            // level={level}
+          // level={level}
           />
         </div>
 
@@ -210,7 +210,7 @@ export async function getServerSideProps(context) {
   const shelters = await get_shelters()
 
   return {
-    props: { stations , shelters},
+    props: { stations, shelters },
   };
 }
 
