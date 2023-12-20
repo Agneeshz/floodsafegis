@@ -7,7 +7,7 @@ import axios from "axios";
 import { setCookie } from 'nookies';
 import { BASE_API_URL } from "@/utils/constants";
 import Loader from "./Loader";
-
+import { ToastContainer, toast } from 'react-toastify';
 const LoginComp = ({ type }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -36,6 +36,7 @@ const LoginComp = ({ type }) => {
           path: '/',
         });
 
+        toast.success("Registered Successfully !!")
         router.push("/map")
       } else if (type === 'login') {
         const response = await axios.post(`https://hydro-predict.onrender.com/auth/api-token-auth/`, {
@@ -48,6 +49,7 @@ const LoginComp = ({ type }) => {
           maxAge: 30 * 24 * 60 * 60, // 30 days
           path: '/',
         });
+        toast.success("Logged In Successfully !!")
         if (formData['username'] === 'admin' && formData['password'] === 'SIH') {
           router.push("/admin/dashboard")
         } else {
@@ -56,6 +58,7 @@ const LoginComp = ({ type }) => {
       }
 
     } catch (error) {
+      toast.error("Something went wrong!!")
       console.error("Something went wrong", error);
     }
     setLoading(false);

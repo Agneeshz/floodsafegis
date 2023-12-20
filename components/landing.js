@@ -7,6 +7,7 @@ import FAQStrip from "./FAQStrip";
 import { Fade, Reveal } from "react-reveal";
 import Link from "next/link";
 import Image from "next/image";
+
 const Landing = () => {
   const features = [
     {

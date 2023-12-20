@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import HeatMap from "@/components/HeatMap";
 import SelectSearch from "react-select-search";
 import "react-select-search/style.css";
-import { get_all_stations_wl_forecast } from "@/utils/api_call";
+import { get_all_stations_wl_forecast, get_shelters } from "@/utils/api_call";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import styles from "@/styles/index.module.css";
@@ -13,7 +13,7 @@ import Button from "@/components/Button";
 import axios from "axios";
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Map({ stations }) {
+export default function Map({ stations, shelters }) {
   const options = [
     { name: "Chenimari", value: "sv" },
     { name: "Chaparmukh", value: "en" },
@@ -156,6 +156,7 @@ export default function Map({ stations }) {
             heatMapData={heatMapData}
             markers={heatMapData?.positions}
             imageGen={imageGen}
+            shelters={shelters}
           />
         </div>
 
@@ -195,8 +196,10 @@ export async function getServerSideProps(context) {
   const resp = await get_all_stations_wl_forecast();
   const stations = resp?.stations;
 
+  const shelters = await get_shelters()
+
   return {
-    props: { stations },
+    props: { stations , shelters},
   };
 }
 

@@ -6,6 +6,7 @@ import ShelterListing from "./ShelterListing";
 import Button from "./Button";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { ToastContainer, toast } from 'react-toastify';
 
 const DashboardComp = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -42,7 +43,9 @@ const DashboardComp = () => {
       );
       console.log(response)
       setModalIsOpen(false);
+      toast.success("Shelter Added !!")
     } catch (error) {
+      toast.error("Something Went Wrong !!")
       console.log('Something went wrong...', error)
     }
   };
