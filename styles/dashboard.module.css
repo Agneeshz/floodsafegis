@@ -46,18 +46,21 @@
     padding: 10px;
     padding-right: 30px;
     box-sizing: border-box;
+    outline:none;
 }
 .gridContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 3vw;
     padding: 10px;
+    border-bottom: 1px solid gray;
 }
 .contentGrid{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 3vw;
     padding: 10px;
+    overflow: auto;
 }
 .button {
     border: 0.5px solid grey;
@@ -86,4 +89,11 @@
     /* margin-left: 1em; */
     /* padding: 10px; */
     /* Add additional styling as needed */
+  }
+  .shelterListing{
+    height: 100%;
+    width: 100%;
+  }
+  .listingsGrid::-webkit-scrollbar{
+    display: none;
   }
