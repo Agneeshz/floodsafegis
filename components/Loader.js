@@ -14,12 +14,14 @@ const Loader = () => {
     };
 
     return (
-        <div>
-            <Lottie
+        <div className="w-full h-screen flex justify-center items-center">
+          <div>
+          <Lottie
                 options={defaultOptions}
                 height={400}
                 width={400}
             />
+          </div>
         </div>
     );
 };

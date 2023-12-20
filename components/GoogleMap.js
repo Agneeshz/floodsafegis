@@ -14,6 +14,8 @@ const GoogleMap = ({
   heatMapData,
   markers,
   stations,
+  imageGen,
+  shelters
 }) => {
   const mapOptions = {
     fullscreenControl: false,
@@ -30,7 +32,7 @@ const GoogleMap = ({
   const [chenimariData, setChenimariData] = useState(
     stations.filter((item) => item["site-name"] == "CHENIMARI (KHOWANG)")[0]
   );
-
+    console.log({shelters});
   const get_DL_WL = (inputString) => {
     const regex = /(\d+\.\d+);(\d+\.\d+):(\d+\.\d+)/;
 
@@ -189,6 +191,19 @@ const GoogleMap = ({
       map.controls[window.google.maps.ControlPosition.TOP_RIGHT].push(
         toggleButton
       );
+
+
+
+      shelters?.map((item)=>{
+        new google.maps.Marker({
+          position: {
+            lat:item?.lat,
+            lng:item?.lng
+          },
+          map,
+          title: "Hello World!",
+        });
+      })
     };
 
     if (!window.google) {
