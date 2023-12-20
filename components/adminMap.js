@@ -16,6 +16,8 @@ const AdminMap = (props) => {
     const lng = latLng.lng();
 
     setMarkerPosition({ lat, lng });
+    props.toggleModel(true)
+    props.updateForm({ lat: lat, lng: lng })
   };
   return (
     <div className="w-full h-full " id="mapContainer">
