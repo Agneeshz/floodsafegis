@@ -32,8 +32,8 @@ const AdminMap = (props) => {
         onClick={handleMapClick}
       >
 
-        {props?.shelters?.map((item)=>{
-          return <Marker position={{lat:item.lat, lng:item.lng}}></Marker>
+        {props?.shelters?.map((item, key)=>{
+          return <Marker key={key} position={{lat:item.lat, lng:item.lng}}></Marker>
         })}
         {markerPosition && (
           <Marker
