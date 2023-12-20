@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-// import { useState, useEffect } from "react";
 import styles from "@/styles/heatmap.module.css";
 import Button from "./Button";
 import LinechartWL from "./LinechartWL";
 import { findClosestPoint } from "@/utils/closest_point";
 import LineChartWeather from "./LineChartWeather";
 import { useRouter } from "next/router";
-const GoogleMap = ({
-  day,
+const GoogleMap = ({ day,
   defaultProps,
   latitude,
   longitude,
   heatMapData,
   markers,
-  stations,
-}) => {
+  imageGen,
+  stations, }) => {
   const mapOptions = {
     fullscreenControl: false,
   };
@@ -55,19 +53,20 @@ const GoogleMap = ({
     }
   };
   const handleMapClick = (event) => {
-    setClosestPoint({ ...chenimariData, lon: chenimariData.lng });
 
-    setIsOpen((e)=>!e);
+
+    setClosestPoint({ ...chenimariData, lon: chenimariData.lng })
+
+    setIsOpen(!isOpen);
   };
   defaultProps.center = { latitude, longitude };
-  console.log({ isOpen });
-
+  console.log({ chenimariData });
   useEffect(() => {
     const initMap = () => {
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 13,
-        center: { lat: 26.1931, lng: 92.5418 },
-        mapTypeId: "satellite",
+        zoom: 11,
+        center: { lat: 27.342919, lng: 94.972796 },
+        // mapTypeId: "satellite",
         mapTypeControl: false,
         disableDefaultUI: true,
       });
@@ -76,11 +75,8 @@ const GoogleMap = ({
       });
       const bounds = new window.google.maps.LatLngBounds(
         new window.google.maps.LatLng(27.19899, 94.81182),
-        new window.google.maps.LatLng(27.342919, 94.972796)
+        new window.google.maps.LatLng(27.342919, 94.972796),
       );
-
-      let image = "/test2.png";
-
       class USGSOverlay extends window.google.maps.OverlayView {
         bounds;
         imageGen;
@@ -192,7 +188,7 @@ const GoogleMap = ({
     };
 
     if (!window.google) {
-      // Load the Google Maps JavaScript API if not already loaded
+      // Load the Google Maps JavaScript API if not already 
       const script = document.createElement("script");
       script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBjX_00GI694FLmt2-_70v4ZHTL8DNa54E&callback=initMap&v=weekly`;
       script.async = true;
@@ -206,93 +202,86 @@ const GoogleMap = ({
       initMap();
     }
   }, []);
-
-  console.log({ closestPoint });
-
-  return (
-    <div>
-      <div id="map" style={{ height: "83vh" }}></div>
-      {showGraph && <div className={styles.backdrop}></div>}
-      <dialog open={isOpen} className={styles.dialogBox}>
-        <p>
-          Location:{" "}
-          {router.pathname == "/waterlevelmap" && closestPoint
-            ? closestPoint["site-name"]
-            : chenimariData["site-name"]}
-        </p>
-        <p>
-          Area Status:{" "}
-          {router.pathname == "/waterlevelmap" &&
+  return <div>
+    <div id="map" style={{ height: "83vh" }}></div>
+    {showGraph && <div className={styles.backdrop}></div>}
+    <dialog open={isOpen} className={styles.dialogBox}>
+      <p>
+        Location:{" "}
+        {router.pathname == "/waterlevelmap" && closestPoint
+          ? closestPoint["site-name"]
+          : chenimariData["site-name"]}
+      </p>
+      <p>
+        Area Status:{" "}
+        {router.pathname == "/waterlevelmap" &&
           closestPoint &&
           closestPoint["day-1-forecast"]
-            ? closestPoint["day-1-forecast"]["flood-condition"]
-            : chenimariData["day-1-forecast"]["flood-condition"]}
-        </p>
-        <p>
-          Warning Level:{" "}
-          {router.pathname == "/waterlevelmap" && closestPoint
-            ? get_DL_WL(closestPoint["WL;DL;HFL"])?.WL
-            : get_DL_WL(chenimariData["WL;DL;HFL"])?.WL}
-        </p>
-        <p>
-          Danger Level:{" "}
-          {router.pathname == "/waterlevelmap" && closestPoint
-            ? get_DL_WL(closestPoint["WL;DL;HFL"])?.DL
-            : get_DL_WL(chenimariData["WL;DL;HFL"])?.DL}
-        </p>
+          ? closestPoint["day-1-forecast"]["flood-condition"]
+          : chenimariData["day-1-forecast"]["flood-condition"]}
+      </p>
+      <p>
+        Warning Level:{" "}
+        {router.pathname == "/waterlevelmap" && closestPoint
+          ? get_DL_WL(closestPoint["WL;DL;HFL"])?.WL
+          : get_DL_WL(chenimariData["WL;DL;HFL"])?.WL}
+      </p>
+      <p>
+        Danger Level:{" "}
+        {router.pathname == "/waterlevelmap" && closestPoint
+          ? get_DL_WL(closestPoint["WL;DL;HFL"])?.DL
+          : get_DL_WL(chenimariData["WL;DL;HFL"])?.DL}
+      </p>
 
-        <p>
-          River :{" "}
-          {router.pathname == "/waterlevelmap" && closestPoint
-            ? closestPoint["river"]
-            : chenimariData["river"]}
-        </p>
-        <div
-          onClick={() => setShowGraph(!showGraph)}
-          className={styles.generateGraphBtn}
-        >
-          <Button text={"Generate Graph"} alignment="center" />
-        </div>
-      </dialog>
-      {showGraph && (
-        <div
-          // open={showGraph}
-          className={styles.graphDialog}
-          // style={{ zIndex: !showGraph && -1 }}
-        >
-          <div className={styles.toggle}>
-            <div
-              className={styles.waterLevel}
-              onClick={() => setShowWL(true)}
-              style={{ background: showWL && "gray" }}
-            >
-              Water Level
-            </div>
-            <div
-              className={styles.weather}
-              style={{ background: !showWL && "gray" }}
-              onClick={() => setShowWL(false)}
-            >
-              Weather
-            </div>
+      <p>
+        River :{" "}
+        {router.pathname == "/waterlevelmap" && closestPoint
+          ? closestPoint["river"]
+          : chenimariData["river"]}
+      </p>
+      <div
+        onClick={() => setShowGraph(!showGraph)}
+        className={styles.generateGraphBtn}
+      >
+        <Button text={"Generate Graph"} alignment="center" />
+      </div>
+    </dialog>
+    {showGraph && (
+      <div
+        className={styles.graphDialog}
+      >
+        <div className={styles.toggle}>
+          <div
+            className={styles.waterLevel}
+            onClick={() => setShowWL(true)}
+            style={{ background: showWL && "gray" }}
+          >
+            Water Level
           </div>
-          <div className={styles.graph}>
-            {showWL ? (
-              <LinechartWL data={closestPoint} />
-            ) : (
-              <LineChartWeather
-                lat={closestPoint?.lat}
-                lng={closestPoint?.lon}
-              />
-            )}
-          </div>
-          <div className={styles.closeBtn}>
-            <button onClick={() => setShowGraph(!showGraph)}>X</button>
+          <div
+            className={styles.weather}
+            style={{ background: !showWL && "gray" }}
+            onClick={() => setShowWL(false)}
+          >
+            Weather
           </div>
         </div>
-      )}
-    </div>
-  );
+        <div className={styles.graph}>
+          {showWL ? (
+            <LinechartWL data={closestPoint} />
+          ) : (
+            <LineChartWeather
+              lat={closestPoint?.lat}
+              lng={closestPoint?.lon}
+            />
+          )}
+        </div>
+        <div className={styles.closeBtn}>
+          <button onClick={() => setShowGraph(!showGraph)}>X</button>
+        </div>
+      </div>
+    )}
+  </div>;
 };
 
 export default GoogleMap;
