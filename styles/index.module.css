@@ -5,20 +5,38 @@
 .searchDiv{
     margin-left: 2vw;
 }
-.searchDiv input:hover{
+/* .searchDiv input:hover{
     width: 12vw;
     transform: scale(1.1);
     border-radius: 4px;
-    outline: 1px rgb(150, 236, 124) solid;
     transition: all ease-in-out 0.3s;
     
+} */
+.searchList{
+    width: 12vw;
+    padding: 0 0vw;
+    background-color: white;
+    margin-top: 1vh;
+    color: gray;
 }
+.searchList p{
+    padding: 0.3vw 0.5vw ;
+    transition: all ease 0.5s;
+    /* border-bottom: 1px solid gray; */
+}
+.searchList p:hover{
+    cursor: pointer;
+    background-color: rgba(195, 181, 181, 0.416);
+    color: black;
+   
+}
+
 .searchDiv input{
     width: 8vw;
     font-size: 1vw;
     padding: 0.3vw 0.3vw;
     color: black;
-    outline:1px rgb(3, 197, 241) solid;
+    outline: none;
     border:none;
     transition: all ease-in-out 0.3s;
 }
@@ -35,6 +53,9 @@
     padding: 0.3vw 1vw;
     font-size: 1.1vw;
     font-weight: 500;
+    height: 6vh;
+    display: flex;
+    align-items: center;
 }
 .viewDiv:hover{
     cursor: pointer;
@@ -43,7 +64,7 @@
     background-color: white;
     color:black;
     position: absolute;
-    top:21vh;
+    top:22vh;
     left: 83vw;
     width: 15vw;
     height: auto;

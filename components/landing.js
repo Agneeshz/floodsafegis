@@ -6,6 +6,7 @@ import Button from "./Button";
 import FAQStrip from "./FAQStrip";
 import { Fade, Reveal } from "react-reveal";
 import Link from "next/link";
+import Image from "next/image";
 const Landing = () => {
   const features = [
     {
@@ -51,7 +52,7 @@ const Landing = () => {
     },
   ];
   return (
-    <div style={{ height: "auto" }}>
+    <div style={{ height: "auto" }} className={styles.parentLanding}>
       <section
         style={{
           height: "100vh",
@@ -59,19 +60,17 @@ const Landing = () => {
         }}
         className={styles.landingBg}
       >
-        <div>
+        <div className={styles.heroBackdrop}>
           <div className={styles.heroTitle1}>
             FloodSafeGIS: Real-Time Flood <div>Inundation Monitoring</div>
           </div>
-          <div
-            style={{ color: "white", fontSize: "1.3vw", textAlign: "center" }}
-          >
+          <div style={{ fontSize: "1.3vw", textAlign: "center" }}>
             Predict, Plan, and Respond Effectively{" "}
             <div> with Our Advanced GIS Application</div>
           </div>
           <div
             style={{
-              marginTop: "2vh",
+              marginTop: "4vh",
               display: "flex",
               justifyContent: "center",
             }}
@@ -80,9 +79,10 @@ const Landing = () => {
             <Button
               text={"Get Started "}
               alignment="center"
-              width="9vw"
+              width="20vw"
               arrow={true}
               href={"/map"}
+              fontSize="2vw"
             />
           </div>
         </div>
@@ -92,20 +92,21 @@ const Landing = () => {
         <Fade>
           <p
             style={{
-              maxWidth: "70%",
-              margin: "10vh auto 5vh",
+              maxWidth: "100%",
+              margin: "22vh auto 22vh",
               textAlign: "center",
-              lineHeight: "2",
+              lineHeight: "1.6",
+              fontSize: "1.8vw",
+              padding: "0 8vw",
             }}
           >
             FloodSafeGIS is a trailblazer in the field of Geographic Information
-            Systems (GIS) and artificial intelligence
-            <br /> (AI) applications. We envision a world where communities are
-            resilient in the face of water-related challenges. <br /> Through
-            our technology, we aim to create a safer, more sustainable future
-            where the impact of floods is minimized, and every individual is
-            equipped with the knowledge to navigate and mitigate potential
-            risks.
+            Systems (GIS) and artificial intelligence (AI) applications. We
+            envision a world where communities are resilient in the face of
+            water-related challenges. Through our technology, we aim to create a
+            safer, more sustainable future where the impact of floods is
+            minimized, and every individual is equipped with the knowledge to
+            navigate and mitigate potential risks.
           </p>
         </Fade>
       </section>{" "}
@@ -133,14 +134,13 @@ const Landing = () => {
             fontWeight: "bold",
             textDecoration: "underline",
           }}
-        >
-          {" "}
-          <Link href="/contactUs">Learn More</Link>
-        </div>
+        ></div>
       </section>
       <section className={styles.howItWorks} id="howItWorks">
         <h1>How it works?</h1>
-        <div className={styles.howItWorksContent}></div>
+        <div className={styles.howItWorksContent}>
+          <Image src={"/video.svg"} width={"1000"} height={"1000"} alt="" />
+        </div>
       </section>
       <section className={styles.FAQS} id="FAQS">
         <h1>Frequently Asked Questions</h1>
