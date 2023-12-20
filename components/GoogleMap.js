@@ -6,76 +6,68 @@ import LinechartWL from "./LinechartWL";
 import { findClosestPoint } from "@/utils/closest_point";
 import LineChartWeather from "./LineChartWeather";
 import { useRouter } from "next/router";
-const GoogleMap = ({ day,
+const GoogleMap = ({
+  day,
   defaultProps,
   latitude,
   longitude,
   heatMapData,
   markers,
-  stations,}) => {
+  stations,
+}) => {
+  const mapOptions = {
+    fullscreenControl: false,
+  };
+  const router = useRouter();
+  console.log(router.pathname);
+  const [selectedPoint, setSelectedPoint] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [population, setPopulation] = useState("94,927");
+  const [showGraph, setShowGraph] = useState(false);
+  const [closestPoint, setClosestPoint] = useState(null);
+  const [showWL, setShowWL] = useState(false);
 
+  const [chenimariData, setChenimariData] = useState(
+    stations.filter((item) => item["site-name"] == "CHENIMARI (KHOWANG)")[0]
+  );
 
-    const mapOptions = {
-      fullscreenControl: false,
-    };
-    const router = useRouter();
-    console.log(router.pathname);
-    const [selectedPoint, setSelectedPoint] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [population, setPopulation] = useState("94,927");
-    const [showGraph, setShowGraph] = useState(false);
-    const [closestPoint, setClosestPoint] = useState(null);
-    const [showWL, setShowWL] = useState(false);
-  
-    const [chenimariData, setChenimariData] = useState(
-      stations.filter((item) => item["site-name"] == "CHENIMARI (KHOWANG)")[0]
-    );
-  
-    const get_DL_WL = (inputString) => {
-      const regex = /(\d+\.\d+);(\d+\.\d+):(\d+\.\d+)/;
-  
-      const matches = inputString.match(regex);
-      // console.log({inputString});
-  
-      if (matches) {
-        const [, value1, value2, value3] = matches;
-  
-        return {
-          WL: value1,
-          DL: value2,
-          HFL: value3,
-        };
-      } else {
-        console.log("No match found.");
-        return {
-          WL: 0,
-          DL: 0,
-          HFL: 0,
-        };
-      }
-    };
-    const handleMapClick = (event) => {
+  const get_DL_WL = (inputString) => {
+    const regex = /(\d+\.\d+);(\d+\.\d+):(\d+\.\d+)/;
 
+    const matches = inputString.match(regex);
+    // console.log({inputString});
 
-      setClosestPoint({...chenimariData, lon:chenimariData.lng})
-  
-      setIsOpen(!isOpen);
-    };
-    defaultProps.center = { latitude, longitude };
-    console.log({ chenimariData });
+    if (matches) {
+      const [, value1, value2, value3] = matches;
 
+      return {
+        WL: value1,
+        DL: value2,
+        HFL: value3,
+      };
+    } else {
+      console.log("No match found.");
+      return {
+        WL: 0,
+        DL: 0,
+        HFL: 0,
+      };
+    }
+  };
+  const handleMapClick = (e) => {
+    setClosestPoint({ ...chenimariData, lon: chenimariData.lng });
 
-
-
-
-
+    if (isOpen === true) setIsOpen(false);
+    else setIsOpen(true);
+    console.log("isOPen", isOpen);
+  };
 
   useEffect(() => {
     const initMap = () => {
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 11,
-        center: { lat: 26.14718443124005, lng: 92.49688443124004 },
-        // mapTypeId: "satellite",
+        zoom: 13,
+        center: { lat: 26.1931, lng: 92.5418 },
+        mapTypeId: "satellite",
         mapTypeControl: false,
         disableDefaultUI: true,
       });
@@ -86,9 +78,7 @@ const GoogleMap = ({ day,
         new window.google.maps.LatLng(26.148136, 92.492067),
         new window.google.maps.LatLng(26.238093, 92.591695)
       );
-        
 
-  
       let image = "/test2.png";
 
       class USGSOverlay extends window.google.maps.OverlayView {
@@ -217,19 +207,12 @@ const GoogleMap = ({ day,
     }
   }, []);
 
+  console.log({ closestPoint });
 
-
-
-
-
-  console.log({closestPoint});
-
-
-
-  return <div>
-
-    <div id="map" style={{ height: "83vh" }}></div>
-    {showGraph && <div className={styles.backdrop}></div>}
+  return (
+    <div>
+      <div id="map" style={{ height: "83vh" }}></div>
+      {showGraph && <div className={styles.backdrop}></div>}
       <dialog open={isOpen} className={styles.dialogBox}>
         <p>
           Location:{" "}
@@ -308,7 +291,8 @@ const GoogleMap = ({ day,
           </div>
         </div>
       )}
-    </div>;
+    </div>
+  );
 };
 
 export default GoogleMap;
