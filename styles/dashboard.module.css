@@ -24,7 +24,7 @@
 .bottomContainer{
     height: 85%;
     width: 70%;
-    background-color: gray;
+    /* background-color: gray; */
     margin: auto;
 }
 
@@ -36,3 +36,54 @@
 #mapContainer:first-child{
     position: relative !important;
 }
+
+.searchinputcontainer {
+    position: relative;
+  }
+  
+  .searchinputcontainer input {
+    width: 100%; 
+    padding: 10px;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    grid-gap: 3vw;
+    padding: 10px;
+}
+.contentGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    grid-gap: 3vw;
+    padding: 10px;
+}
+.button {
+    border: 0.5px solid grey;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 90px;
+    height: 30px;
+    border-radius: 4px;
+  }
+  .myButton:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+  }
+  .trashCan {
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* background-color: #f44336; */
+    /* color: #fff;  */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    /* margin-left: 1em; */
+    /* padding: 10px; */
+    /* Add additional styling as needed */
+  }

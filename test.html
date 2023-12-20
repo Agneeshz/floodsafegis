@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Maps Image Overlay</title>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    function initMap() {
+      const topLeft = { lat: 26.238015558749552, lng: 92.49688444125044 };
+      const topRight = { lat: 26.238015558749552, lng: 92.58671555874955 };
+      const bottomLeft = { lat: 26.14818444125045, lng: 92.49688444125044 };
+      const bottomRight = { lat: 26.14818444125045, lng: 92.58671555874955 };
+
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: {
+          lat: (topLeft.lat + bottomRight.lat) / 2,
+          lng: (topLeft.lng + bottomRight.lng) / 2,
+        },
+        zoom: 14,
+      });
+
+      // Create a custom overlay using OverlayView
+      class ImageOverlay extends google.maps.OverlayView {
+        constructor(bounds, image) {
+          super();
+          this.bounds_ = bounds;
+          this.image_ = image;
+          this.div_ = null;
+          this.setMap(map);
+        }
+
+        onAdd() {
+          const div = document.createElement("div");
+          div.style.borderStyle = "none";
+          div.style.borderWidth = "0px";
+          div.style.position = "absolute";
+
+          const img = document.createElement("img");
+          img.src = this.image_;
+          img.style.width = "100%";
+          img.style.height = "100%";
+          div.appendChild(img);
+
+          this.div_ = div;
+          const panes = this.getPanes();
+          panes.overlayImage.appendChild(div);
+        }
+
+        draw() {
+          const overlayProjection = this.getProjection();
+          const sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+          const ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+          const div = this.div_;
+          div.style.left = sw.x + "px";
+          div.style.top = ne.y + "px";
+          div.style.width = ne.x - sw.x + "px";
+          div.style.height = sw.y - ne.y + "px";
+        }
+
+        onRemove() {
+          if (this.div_) {
+            this.div_.parentNode.removeChild(this.div_);
+            this.div_ = null;
+          }
+        }
+      }
+
+      // Create bounds from the image coordinates
+      const imageBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(topLeft.lat, topLeft.lng),
+        new google.maps.LatLng(bottomRight.lat, bottomRight.lng)
+      );
+
+      // Specify the path to your image
+      const imageUrl = 'test.jpg';
+
+      // Create the custom overlay with the image bounds and URL
+      const overlay = new ImageOverlay(imageBounds, imageUrl);
+    }
+  </script>
+
+  <!-- Include the Google Maps JavaScript API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjX_00GI694FLmt2-_70v4ZHTL8DNa54E&callback=initMap" 
+    async defer></script>
+</body>
+</html>
