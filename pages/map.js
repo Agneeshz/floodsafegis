@@ -15,7 +15,40 @@ import { findClosestNumber } from "@/utils/cloesest_wl";
 import wls from '@/utils/prediction_wl_images.json'
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Map({ stations, shelters }) {
+export default function Map({ }) {
+
+
+
+  // export async function getServerSideProps(context) {
+  //   const resp = await get_all_stations_wl_forecast();
+  //   const stations = resp?.stations;
+  
+  //   const shelters = await get_shelters()
+  
+  //   return {
+  //     props: { stations, shelters },
+  //   };
+  // }
+
+  
+
+  const [stations,setStations] = useState([])
+  const [shelters, setShelters] = useState([])
+
+  useEffect(()=>{
+
+    get_all_stations_wl_forecast().then((res)=>{
+      setStations(res?.stations)
+    })
+
+    get_shelters().then((res)=>{
+      setShelters(res)
+    })
+
+  },[])
+
+
+
   const options = [
     { name: "Chenimari", value: "sv" },
     { name: "Chaparmukh", value: "en" },
@@ -156,7 +189,8 @@ export default function Map({ stations, shelters }) {
           markers={heatMapData?.positions}
         /> */}
         <div style={{ height: "80vh" }}  >
-          <GoogleMap
+          {
+            stations.length !==0 && shelters.length !== 0 ? <GoogleMap
 
             stations={stations}
             day={day}
@@ -168,7 +202,9 @@ export default function Map({ stations, shelters }) {
             imageGen={imageGen}
             shelters={shelters}
           // level={level}
-          />
+          />:<>
+          </>
+          }
         </div>
 
         <div className={styles.searchAndView}>
@@ -203,16 +239,7 @@ export default function Map({ stations, shelters }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const resp = await get_all_stations_wl_forecast();
-  const stations = resp?.stations;
 
-  const shelters = await get_shelters()
-
-  return {
-    props: { stations, shelters },
-  };
-}
 
 Map.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
